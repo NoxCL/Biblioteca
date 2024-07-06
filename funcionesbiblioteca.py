@@ -3,6 +3,7 @@ import datetime
 prestamos = []
 
 def validar_fecha(texto_fecha):
+#esta funcion permite verificar que las fechas ingresadas sean correctas
     try:
         fecha = datetime.datetime.strptime(texto_fecha, '%Y-%m-%d')
         return fecha
@@ -10,6 +11,7 @@ def validar_fecha(texto_fecha):
         return None
 
 def registrar_prestamo():
+#aqui se pide el nombre al usuario
     while True:
         nombre = input('Ingrese el nombre y apellido del usuario: ')
         if nombre:
@@ -17,6 +19,7 @@ def registrar_prestamo():
         else:
             print('El nombre ingresado no es válido. Por favor, intente de nuevo.')
     
+#aqui se le pide una identificacion del libro, tiene que ser numerica y contener como minimo 4 digitos
     while True:
         id_libro = input('Ingrese la identificación del libro (ID): ')
         if id_libro.isdigit() and len(id_libro) >= 4:
@@ -25,6 +28,8 @@ def registrar_prestamo():
         else:
             print('El ID del libro debe ser un número de al menos cuatro dígitos. Por favor, intente de nuevo.')
     
+#aqui se ingresa la fecha de prestamo, el programa verifica si las fechas son validas, e impide que se pueda ingresar
+#una fecha de devolucion anterior a la de prestamo
     while True:
         fecha_prestamo_texto = input('Ingrese la fecha de préstamo (YYYY-MM-DD): ')
         fecha_prestamo = validar_fecha(fecha_prestamo_texto)
@@ -44,6 +49,7 @@ def registrar_prestamo():
         else:
             print('La fecha de devolución no es válida. Por favor, intente de nuevo.')
 
+#creacion del diccionario resultante con los valores pedidos anteriormente
     prestamo = {
         'nombre': nombre,
         'id_libro': id_libro,
@@ -55,6 +61,7 @@ def registrar_prestamo():
     print('Préstamo registrado exitosamente.')
 
 def listar_prestamos():
+#se  verifica si existen prestamos registrados y se enumeran para imprimir en la terminal
     if not prestamos:
         print('No hay préstamos registrados.')
         print('')
@@ -64,6 +71,8 @@ def listar_prestamos():
         print(f'{i}. Nombre: {prestamo['nombre']}, ID del libro: {prestamo['id_libro']}, Fecha de préstamo: {prestamo['fecha_prestamo']}, Fecha de devolución: {prestamo['fecha_devolucion']}')
 
 def imprimir_recibo_prestamo():
+#al igual que la funcion anterior esta tambien verifica si existen prestamos registrados, pero creando en este caso
+#un archivo .txt que actua como boleta para ser impresa.
     if not prestamos:
         print('No hay préstamos registrados.')
         print('')
@@ -97,5 +106,6 @@ def imprimir_recibo_prestamo():
     print('')
 
 def salir_programa():
+#funcion simple que termina el programa
     print('Saliendo del programa...')
     exit()
